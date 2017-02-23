@@ -1,0 +1,31 @@
+package assignment2;
+
+import java.util.*;
+
+
+public class Driver {
+	
+	public static void main (String[] args){
+		boolean yes = false;			// value for running game
+		boolean testing = false;		//check for testing mode
+		if(args.length > 0){
+			if(args[0].equals('1')){
+				testing = true;
+			}
+		}
+		
+		System.out.println("Weclome to Mastermnd."); //Greeting
+		System.out.println("Do you want to play a new game? (Y/N):");
+		
+		Scanner sc = new Scanner(System.in);	// check for Y or N
+		String check = sc.next();
+		if(check == "Y"){
+			yes = true;
+		}
+		
+		while(yes){						// runs the game engine
+			
+		}
+	}
+	
+}

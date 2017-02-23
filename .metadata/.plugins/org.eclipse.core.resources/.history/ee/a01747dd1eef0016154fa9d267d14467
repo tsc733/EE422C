@@ -1,0 +1,19 @@
+package assignment2;
+
+import java.util.*;
+
+
+public class Driver {
+	
+	public static void main (String[] args){
+		boolean testing = false;		//check for testing mode
+		if(args.length > 0){
+			if(args[0].equals('1')){
+				testing = true;
+			}
+		}
+		Scanner sc = new Scanner		
+		
+	}
+	
+}

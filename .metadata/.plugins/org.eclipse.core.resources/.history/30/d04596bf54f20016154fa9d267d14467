@@ -1,0 +1,114 @@
+package assignment2;
+
+import java.util.*;
+
+
+public class Game {
+	
+	public static boolean yes = false;	// value for running game
+	public static String solution;
+	public static int guesses;
+	public static Scanner sc;
+	public static boolean notvalid = true;
+	public static int bp = 0;
+	public static int wp = 0;
+	public static int count = 0;
+	public static String[] inp;
+	public static String[] sol;
+	public static String input;
+	
+	Game (boolean t){
+		guesses = GameConfiguration.guessNumber;
+		
+		sc = new Scanner(System.in);	// check for Y or N
+		String check = sc.next();
+		if(check.equals("Y")){
+			yes = true;
+		}
+		if(check.equals("N")){
+			return;
+		}
+		
+		solution = SecretCodeGenerator.getInstance().getNewSecretCode();
+		
+		if(t == true){
+			System.out.println("Secret code: " + solution);
+		}
+		System.out.println("");
+	}
+	
+	public static void runGame(){
+		while(notvalid){	// take input, check validity
+			System.out.println("You have " + guesses + " guess(es) left.");
+			System.out.println("Enter guess: ");
+			
+			input = sc.next(); // convert to search one by one
+			inp = input.split("");
+			
+			if(inp.length == GameConfiguration.pegNumber){
+				for(int i = 0; i < inp.length; i++){
+					for(int k = 0; k < GameConfiguration.colors.length; k++){
+						if(inp[i].equals(GameConfiguration.colors[k])){
+							count++;
+						}
+					}
+				}
+				if(count == inp.length){
+					notvalid = false;
+				} else{
+					System.out.println("INVALID_GUESS");
+					System.out.println("");
+				}
+			} else{
+				System.out.println("INVALID_GUESS");
+				System.out.println("");
+			}
+		}
+
+		// black peg: right color/position, white peg: right color
+		// analysis of input and solution
+		sol = solution.split("");	// now both input and solution are arrays
+		
+		for(int i = 0; i < inp.length; i++){	// analysis
+			if(inp[i].equals(sol[i])){
+				bp += 1;
+			} else{
+				for(int k = i; k < inp.length; k++){
+					if(inp[i].equals(sol[k])){
+						wp += 1;
+					}
+				}
+			}
+		}
+		
+		//print analysis, update guess(es)
+		System.out.println(input + " -> " + bp + "b_" + wp + "w");
+		
+		if(bp == 4){	// if you win
+			System.out.println("You win!");
+			System.out.println("");
+			System.out.println("Do you want to play a new game? (Y/N): ");
+			input = sc.next();
+			if(input.equals("N")){
+				yes = false;
+				return;
+			}
+			return;
+		}
+		
+		guesses -= 1;
+		if(guesses == 0){	// if you lose
+			System.out.println("You lose! The pattern was " + solution);
+			System.out.println("");
+			System.out.println("Do you want to play a new game? (Y/N): ");
+			input = sc.next();
+			if(input.equals("N")){
+				yes = false;
+				return;
+			}	
+			return;
+		}
+		
+	}
+	
+}
